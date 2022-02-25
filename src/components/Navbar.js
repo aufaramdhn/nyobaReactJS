@@ -1,83 +1,46 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "../App.css";
 
-function Navbar() {
-  const [click, setClick] = useState(false);
-
-  const handleClick = () => setClick(!click);
-
+const Navbar = () => {
+  let Links = [
+    { name: "HOME", link: "/" },
+    { name: "ABOUT", link: "/about" },
+    { name: "SERVICE", link: "/service" },
+    { name: "CONTACT", link: "/contact" },
+  ];
+  let [open, setOpen] = useState(false);
   return (
-    <nav className="px-2 py-4 bg-white border-gray-200 sm:px-4 dark:bg-gray-800">
-      <div className="container flex flex-wrap items-center justify-around mx-auto">
-        <a href="#" className="flex">
-          <div className="text-3xl text-blue-600">
+    <div className="fixed top-0 left-0 z-10 w-full shadow-md">
+      <div className="items-center justify-between px-10 py-4 bg-gray-900 md:flex md:px-10 lg:px-32">
+        <div className="flex items-center text-2xl font-bold cursor-pointer dark:text-white">
+          <span className="pt-2 mr-1 text-3xl dark:text-blue-700">
             <i className="ri-aliens-fill" />
-          </div>
-          <span className="self-center px-2 text-lg font-semibold whitespace-nowrap dark:text-white">
-            AlienJomride
           </span>
-        </a>
-        <div className="flex md:order-2">
-          <button
-            type="button"
-            className="py-2 mr-3 text-sm font-bold text-center text-white duration-200 delay-100 rounded-sm px-2.5 hover:text-gray-900 bg outline outline-slate-100 hover:bg-slate-100 md:mr-0"
-          >
-            Get started
-          </button>
-          <button
-            data-collapse-toggle="mobile-menu-4"
-            type="button"
-            className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="mobile-menu-4"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <div onClick={handleClick}>
-              <i className={click ? "ri-close-line" : "ri-menu-line"} />
-            </div>
-          </button>
+          AlienJomRide
         </div>
-        <div
-          className="items-center hidden w-full md:flex md:w-auto md:order-1"
-          id="mobile-menu-4"
-        >
-          <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-700 border-b-8 border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-700 border-gray-100 bborder-b-4 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-700 border-b-4 border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Services
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-700 border-b-4 border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
+
+        <div onClick={() => setOpen(!open)} className="absolute text-3xl text-gray-400 cursor-pointer right-8 top-6 md:hidden">
+          <i className={open ? "ri-close-line" : "ri-menu-line"} />
         </div>
+
+        <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-gray-900 md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? "top-20 " : "top-[-490px]"}`}>
+          {Links.map((link) => (
+            <li key={link.name} className="text-xl font-semibold md:ml-8 md:my-0 my-7">
+              <a href={link.link} className="text-white duration-500 hover:text-gray-400">
+                {link.name}
+              </a>
+            </li>
+          ))}
+          <Link to="/contact">
+            <button type="button" className="px-2 py-2 ml-6 mr-4 text-lg font-medium text-center text-white duration-200 delay-100 rounded-sm hover:text-gray-900 bg outline outline-slate-100 hover:bg-slate-100 md:mr-0">
+              Get started
+            </button>
+          </Link>
+        </ul>
       </div>
-    </nav>
+    </div>
   );
-}
+};
 
 export default Navbar;
